@@ -16,9 +16,9 @@ for filename in os.listdir(path):
     output_file.write(filename + '\n')
     output_file.write(ds.top() + '\n' + '\n')
 
-# ds = dcmread("../data/Pancreas-CT/PANCREAS_0021/11-24-2015-PANCREAS0021-Pancreas-81508/Pancreas-15844/1-002.dcm")
-# print(ds)
-# arr = ds.pixel_array
+ds = dcmread("./images/patient11-19.dcm")
+print(ds)
+arr = ds.pixel_array
 
 # plt.imshow(arr, cmap="gray")
 # plt.show()
