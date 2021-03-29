@@ -39,9 +39,15 @@ npy_segment= np.array(segmentado)
 npy_with_masking=np.multiply(npy_base,npy_segment)
 print(np.sum(npy_with_masking))
 
+path_base=os.getcwd()
+save_path=os.path.join(path_base,"result")
+os.mkdir(save_path)
 it = 0
+
 for shape in npy_with_masking:
     name = str(it) + ".npy"
-    np.save(name, shape)
-    i += 1
-    print("File " + name + " generated.")
+    filename=os.path.join(save_path,name)
+    np.save(filename, shape)
+    it += 1
+    print("File " + filename + " generated.")
+        
