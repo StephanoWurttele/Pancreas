@@ -21,22 +21,27 @@ import pydicom
 from pydicom import dcmread
 from pydicom.data import get_testdata_file
 import os
-arr1=np.empty([240,512,512])
+npy_base=np.empty([240,512,512])
 i=0
+
 for filename in os.listdir(path):
     f = os.path.join(path,filename)
     ds = dcmread(f)
-    arr1[i]=ds.pixel_array
+    npy_base[i]=ds.pixel_array
     i+=1
-no_segmentado = arr1
-#print(no_segmentado)
+
+no_segmentado = npy_base
 segmentado = np.load(r'C:\Users\usuario\Downloads\01.npy')
 print("Dimensiones segmentado", len(segmentado), len(segmentado[0]), len(segmentado[0][0]))
 print("Dimensiones no_segmentado", len(no_segmentado), len(no_segmentado[0]), len(no_segmentado[0][0]))
 
-arr2= np.array(segmentado)
-arr3=np.multiply(arr1,arr2)
-print(np.sum(arr3))
-arr4=[[[1,1,1],[2,3,1],[5,4,3]]]
-arr5=[[[8,6,5],[4,5,7],[3,4,5]]]
-print(np.multiply(arr4,arr5))
+npy_segment= np.array(segmentado)
+npy_with_masking=np.multiply(npy_base,npy_segment)
+print(np.sum(npy_with_masking))
+
+it = 0
+for shape in npy_with_masking:
+    name = str(it) + ".npy"
+    np.save(name, shape)
+    i += 1
+    print("File " + name + " generated.")
